@@ -1,5 +1,4 @@
 <style>
-    /* Grid */
     .row {
         display: flex;
         flex-wrap: wrap;
@@ -33,7 +32,6 @@
         }
     }
 
-    /* General Styles */
     .content-container {
         padding-left: 5%;
         text-align: right;
@@ -91,7 +89,6 @@
 
 
 
-    /* Responsiveness */
     @media (max-width: 767px) {
 
         .col-md-3,
@@ -127,7 +124,6 @@
         border-radius: 0.25rem;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         text-decoration: none;
-        /* Adicionando essa linha para remover o sublinhado */
     }
 
     .btn-primary {
@@ -199,7 +195,7 @@
 
 
     .inicializador {
-        margin-left: 18%;
+        margin-left: 20%;
         position: relative;
         width: 80%;
         margin-top: 5%;
@@ -243,9 +239,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        /* border: 2px solid #1d519b82; */
         border-radius: 10px;
-        /* background: #cde9f545; */
     }
 
     .grupo-menu h1 {
@@ -266,7 +260,6 @@
 
     .input-container {
         position: relative;
-        /* width: 800px; */
         border: 1px solid #ccc;
         border-radius: 20px;
         overflow: hidden;
@@ -373,24 +366,19 @@
 
     .botoes {
         text-align: center;
-        /* Centralizar os elementos dentro da div */
     }
 
     .botoes .btn,
     .botoes a {
         display: inline-block;
         vertical-align: middle;
-        /* Centralizar verticalmente */
         margin-right: 10px;
-        /* Adicionar um espaço entre os elementos */
     }
 
     .botoes button {
         display: inline-block;
         vertical-align: middle;
-        /* Centralizar verticalmente */
         margin-right: 10px;
-        /* Adicionar um espaço entre os elementos */
     }
 
     .botoes svg {
@@ -399,14 +387,12 @@
 
     .form-group {
         margin-bottom: 1rem;
-        /* Espaçamento inferior padrão */
     }
 
     .col-md-6 {
         flex: 0 0 auto;
         width: 49%;
         margin-left: 0.7%;
-        /* margin-right: 1px; */
     }
 
     .btn-success {
@@ -603,7 +589,6 @@
         transform: translate(2px, 2px);
     }
 
-    /* Customize the toast container */
     .toast-container {
         position: fixed;
         top: 20px;
@@ -611,7 +596,6 @@
         z-index: 9999;
     }
 
-    /* Customize the toast */
     .toast {
         position: relative;
         max-width: 350px;
@@ -625,7 +609,6 @@
         box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
     }
 
-    /* Customize the toast header */
     .toast-header {
         display: flex;
         align-items: center;
@@ -636,8 +619,6 @@
         border-radius: .25rem .25rem 0 0;
     }
 
-    /* Customize the close button */
-    /* Customize the close button */
     .toast .close {
         position: absolute;
         top: 0;
@@ -656,7 +637,6 @@
     }
 
 
-    /* Customize the alert colors */
     .alert-success {
         color: #155724;
         background-color: #d4edda;

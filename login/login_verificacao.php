@@ -50,3 +50,5 @@ if (isset($_POST['submit']) && !empty($_POST['nickname']) && !empty($_POST['senh
 } else {
     redirect("login_view.php");
 }
+mysqli_close($conexao);
+?>

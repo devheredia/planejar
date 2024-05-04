@@ -57,3 +57,5 @@ function inserirUsuario($conexao, $nickname, $email, $data_nascimento, $senha) {
     $result = mysqli_query($conexao, $sql);
     return $result;
 }
+mysqli_close($conexao);
+?>

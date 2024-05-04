@@ -48,7 +48,7 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
                     <div class="row" style="display: none;">
                         <div class="col-md-12">
                             <div class="input-container">
-                                <input id="identificadorUnidade" name="identificadorUnidade" placeholder="Id" type="text" readonly style="background-color: #dfdddd !important; cursor: not-allowed !important;">
+                                <input id="identificadorUnidade" name="identificadorUnidade" placeholder="Id" type="text" disabled style="background-color: #dfdddd !important; cursor: not-allowed !important;">
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
                             </svg>
                             Voltar
                         </a>
-                        <button type="button" name="submitInserirunidade" value="submitInserirunidade" class="btn btn-success" onclick="rp_swall(this, 'Enviar', ' Deseja adcionar está Unidade?', 'warning', 60000, true)">
+                        <button type="button" name="submitInserirUnidade" value="submitInserirUnidade" class="btn btn-success" onclick="rp_swall(this, 'Enviar', ' Deseja adcionar está Unidade?', 'warning', 60000, true)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 12">
                                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
                             </svg>
@@ -94,74 +94,5 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
         </div>
         </form>
     </div>
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="dataTable">
-                <table id="listar-unidade" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Unidade</th>
-                            <th>Inseridor</th>
-                            <th>Status</th>
-                            <th>Data de Aplicação</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+    
 </div>
-<script>
-    $(document).ready(function() {
-        var table = $('#listar-unidade').DataTable({
-            ajax: 'listar_unidade.php',
-            processing: true,
-            serverSide: true,
-            language: {
-                "sProcessing": "Processando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "Não foram encontrados resultados",
-                "sEmptyTable": "Nenhum registro disponível",
-                "sInfo": "Mostrando _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Pesquisar:",
-                "sUrl": "",
-                "sInfoThousands": ".",
-                "sLoadingRecords": "Carregando...",
-                "oPaginate": {
-                    "sFirst": "Primeiro",
-                    "sLast": "Último",
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                }
-            },
-            createdRow: function(row, data, dataIndex) {
-                if (dataIndex % 2 === 0) {
-                    $(row).addClass('linha-azul');
-                } else {
-                    $(row).addClass('linha-verde');
-                }
-            }
-        });
-
-        $('#listar-unidade tbody').on('click', 'tr', function() {
-            var data = table.row(this).data();
-            $('input[name="identificadorUnidade"]').val(data[0]);
-            $('input[name="unidade"]').val(data[1]);
-
-            $('#botoesUpdate').css('display', 'flex');
-            $('#botoesEnvio').css('display', 'none');
-        });
-
-        $('.bin-button').click(function() {
-            $('#toast-menu-div').css('display', 'none');
-        });
-    });
-</script>

@@ -1,33 +1,52 @@
 <?php
 session_start();
-if (isset($_SESSION['nickname'])) {
-    $user_id = $_SESSION['nickname']['id'];
-    header("Location: login_sistema.php?");
+
+function redirect($location) {
+    header("Location: $location");
     exit;
 }
 
-if (isset($_POST['submit']) && !empty($_POST['nickname']) && !empty($_POST['senha'])) {
-    include_once('../config.php');
-
-    $sql = "SELECT * FROM usuarios WHERE usuario_nome = ? AND senha = ? AND permissao = 0 AND permissao != 3";
+function login($conexao, $nickname, $senha) {
+    $sql = "SELECT 
+                id,
+                usuario_nome,
+                email,
+                data_nascimento,
+                senha,
+                permissao,
+                data_envio 
+            FROM 
+                usuarios 
+            WHERE 
+                usuario_nome = ? 
+            AND 
+                senha = ? 
+            AND 
+                permissao = 0 
+            AND 
+                permissao != 3
+            ";
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ss", $_POST['nickname'], $_POST['senha']);
+    $stmt->bind_param("ss", $nickname, $senha);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows < 1) {
-        header("Location: login_view.php?error=invalido");
-        exit;
+        redirect("login_view.php?error=invalido");
     } else {
         $usuario = $result->fetch_assoc();
         $_SESSION['usuario'] = $usuario;
-
-        $user_id = $usuario['id'];
-
-        header("Location: login_sistema.php?");
-        exit;
+        redirect("login_sistema.php");
     }
+}
+
+if (isset($_SESSION['usuario'])) {
+    redirect("login_sistema.php");
+}
+
+if (isset($_POST['submit']) && !empty($_POST['nickname']) && !empty($_POST['senha'])) {
+    include_once('../config.php');
+    login($conexao, $_POST['nickname'], $_POST['senha']);
 } else {
-    header("Location: login_view.php?");
-    exit;
+    redirect("login_view.php");
 }

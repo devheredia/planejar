@@ -2,13 +2,11 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastre-se</title>
     <link rel="stylesheet" href="css/login_view.css">
     <link rel="stylesheet" href="../global/bootstrap4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../global/bootstrap4/js/bootstrap.min.js"></script>
-    <title>Cadastre-se</title>
 </head>
 
 <body>
@@ -62,51 +60,9 @@
         </form>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#form').on('submit', function(event) {
-                var senha = $('#senha').val();
-                if (senha.length < 8) {
-                    $('#senha').css('border-color', 'red');
-                    event.preventDefault();
-                } else {
-                    $('#senha').css('border-color', '');
-                }
-            });
-
-            $('#button').click(function(event) {
-                var senha = $('#senha').val();
-                var confirmeSenha = $('#confirme_senha').val();
-
-                if (senha !== confirmeSenha) {
-                    alert("As senhas não coincidem. Por favor, insira senhas iguais.");
-                    event.preventDefault();
-                }
-            });
-
-            $('#data_nascimento').on('input', function() {
-                var val = this.value.replace(/\D/g, '');
-                if (val.length > 8) {
-                    val = val.slice(0, 8);
-                }
-                if (val.length > 4) {
-                    val = val.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
-                } else if (val.length > 2) {
-                    val = val.replace(/(\d{2})(\d{2})/, '$1/$2');
-                }
-                this.value = val;
-            });
-
-            $('#senha').on('input', function() {
-                var senha = $(this).val();
-                if (senha.length < 8) {
-                    $(this).css('border-color', 'red');
-                } else {
-                    $(this).css('border-color', '');
-                }
-            });
-        });
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../global/bootstrap4/js/bootstrap.min.js"></script>
+    <script src="js/login_registro.js"></script>
 </body>
 
 </html>

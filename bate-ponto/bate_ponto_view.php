@@ -156,9 +156,9 @@ $titulo = 'Bate-Ponto';
     $(document).ready(function() {
         var timeInputs = $('input[placeholder="Entrada"], input[placeholder="Saída"]');
         timeInputs.on('click', function() {
-            if ($(this).attr('type') !== 'time') {
-                // Change the type to "time"
-                $(this).attr('type', 'time');
+            if ($(this).attr('type') !== 'datetime-local') {
+                // Change the type to "datetime-local"
+                $(this).attr('type', 'datetime-local');
                 $(this).focus();
             }
         });

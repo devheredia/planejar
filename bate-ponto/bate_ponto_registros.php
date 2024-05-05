@@ -1,5 +1,10 @@
-<?php
+<?php 
 include 'includes.php';
+?>
+<div class="inicializador">
+    <div class="row">
+        <div class="col-md-12">
+        <?php
 
 // Função para calcular horas diurnas e noturnas
 function calcularHoras($entrada, $saida) {
@@ -11,13 +16,17 @@ function calcularHoras($entrada, $saida) {
         $saida += 86400; // Adiciona 24 horas em segundos
     }
 
+    $horaInicialNoturna = strtotime("22:00"); // Hora inicial do período noturno
+    $horaFinalNoturna = strtotime("05:00");   // Hora final do período noturno
+
     $horasDiurnas = 0;
     $horasNoturnas = 0;
 
     // Calcula as horas trabalhadas
     while ($entrada < $saida) {
         $horaAtual = date("H", $entrada);
-        if ($horaAtual >= 5 && $horaAtual < 22) {
+        if (($horaAtual >= 5 && $horaAtual < 22) ||
+            ($horaAtual >= 0 && $horaAtual < 5 && $entrada < $horaFinalNoturna)) {
             $horasDiurnas++;
         } else {
             $horasNoturnas++;
@@ -25,10 +34,10 @@ function calcularHoras($entrada, $saida) {
         $entrada = strtotime('+1 hour', $entrada);
     }
 
-    echo "Horas Diurnas: $horasDiurnas, Horas Noturnas: $horasNoturnas<br>";
-
     return array($horasDiurnas, $horasNoturnas);
 }
+
+
 
 // Consulta ao banco de dados para obter os períodos de trabalho
 $sql = "SELECT entrada, saida FROM bateponto";
@@ -59,3 +68,7 @@ if ($resultado->num_rows > 0) {
 // Fecha a conexão com o banco de dados
 $conexao->close();
 ?>
+
+        </div>
+    </div>
+</div>

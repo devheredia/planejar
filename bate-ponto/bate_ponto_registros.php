@@ -10,7 +10,6 @@ function calcularTempoDiurnoNoturno($entrada, $saida) {
     if ($entrada < $fimNoturno && $saida > $inicioNoturno) {
         $intervaloDiurno = $entrada->diff($inicioNoturno);
         $intervaloNoturno = $saida->diff($inicioNoturno);
-
         return [
             'tempoDiurno' => $intervaloDiurno->format('%H:%I:%S'),
             'tempoNoturno' => $intervaloNoturno->format('%H:%I:%S')
@@ -46,7 +45,7 @@ function processarBatePonto($conexao) {
 }
 
 $resultados = processarBatePonto($conexao);
-$conexao->close();
+mysqli_close($conexao);
 ?>
 
 <div class="inicializador">

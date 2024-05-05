@@ -1,0 +1,7 @@
+CREATE TABLE `planejar`.`bateponto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_user` INT NOT NULL,
+  `entrada` DATETIME NOT NULL,
+  `saida` DATETIME NOT NULL,
+  `data_envio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));

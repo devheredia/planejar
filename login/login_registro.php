@@ -62,10 +62,6 @@
             </div>
         </form>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../global/bootstrap4/js/bootstrap.min.js"></script>
-    <script src="js/login_registro.js"></script>
 </body>
 
 </html>

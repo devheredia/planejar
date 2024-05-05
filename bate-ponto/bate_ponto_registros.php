@@ -51,7 +51,6 @@ $conexao->close();
 
 <div class="inicializador">
 <?php include 'menu.php'; ?>
-
     <div class="row">
         <div class="col-md-12">
             <?php echo $resultados; ?> 

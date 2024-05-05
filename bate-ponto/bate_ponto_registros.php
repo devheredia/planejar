@@ -1,74 +1,60 @@
-<?php 
+<?php
 include 'includes.php';
-?>
-<div class="inicializador">
-    <div class="row">
-        <div class="col-md-12">
-        <?php
+$titulo = 'Registros';
 
-// Função para calcular horas diurnas e noturnas
-function calcularHoras($entrada, $saida) {
-    $entrada = strtotime($entrada);
-    $saida = strtotime($saida);
+function calcularTempoDiurnoNoturno($entrada, $saida) {
+    $inicioNoturno = new DateTime($entrada->format('Y-m-d 22:00:00'));
+    $fimNoturno = new DateTime($saida->format('Y-m-d 05:00:00'));
+    $fimNoturno->modify('+1 day'); 
 
-    // Se a hora de saída for menor que a hora de entrada, adiciona um dia ao horário de saída
-    if ($saida < $entrada) {
-        $saida += 86400; // Adiciona 24 horas em segundos
+    if ($entrada < $fimNoturno && $saida > $inicioNoturno) {
+        $intervaloDiurno = $entrada->diff($inicioNoturno);
+        $intervaloNoturno = $saida->diff($inicioNoturno);
+
+        return [
+            'tempoDiurno' => $intervaloDiurno->format('%H:%I:%S'),
+            'tempoNoturno' => $intervaloNoturno->format('%H:%I:%S')
+        ];
+    } else {
+        return [
+            'tempoDiurno' => $entrada->diff($saida)->format('%H:%I:%S'),
+            'tempoNoturno' => '00:00:00'
+        ];
     }
+}
 
-    $horaInicialNoturna = strtotime("22:00"); // Hora inicial do período noturno
-    $horaFinalNoturna = strtotime("05:00");   // Hora final do período noturno
+function processarBatePonto($conexao) {
+    $htmlResultados = ""; 
 
-    $horasDiurnas = 0;
-    $horasNoturnas = 0;
+    $sql = "SELECT entrada, saida FROM bateponto";
+    $resultadoSql = $conexao->query($sql);
 
-    // Calcula as horas trabalhadas
-    while ($entrada < $saida) {
-        $horaAtual = date("H", $entrada);
-        if (($horaAtual >= 5 && $horaAtual < 22) ||
-            ($horaAtual >= 0 && $horaAtual < 5 && $entrada < $horaFinalNoturna)) {
-            $horasDiurnas++;
-        } else {
-            $horasNoturnas++;
+    if ($resultadoSql->num_rows > 0) {
+        while ($row = $resultadoSql->fetch_assoc()) {
+            $entrada = new DateTime($row["entrada"]);
+            $saida = new DateTime($row["saida"]);
+
+            $tempos = calcularTempoDiurnoNoturno($entrada, $saida);
+
+            $htmlResultados .= "Entrada: " . $entrada->format('H:i:s') . " - Saída: " . $saida->format('H:i:s') . " - Tempo diurno: " . $tempos['tempoDiurno'] . " - Tempo noturno: " . $tempos['tempoNoturno'] . "<br>";
         }
-        $entrada = strtotime('+1 hour', $entrada);
+    } else {
+        $htmlResultados = "0 results";
     }
 
-    return array($horasDiurnas, $horasNoturnas);
+    return $htmlResultados;
 }
 
-
-
-// Consulta ao banco de dados para obter os períodos de trabalho
-$sql = "SELECT entrada, saida FROM bateponto";
-$resultado = $conexao->query($sql);
-
-if ($resultado->num_rows > 0) {
-    // Inicializa totalizadores
-    $totalHorasDiurnas = 0;
-    $totalHorasNoturnas = 0;
-
-    // Itera sobre os resultados
-    while ($row = $resultado->fetch_assoc()) {
-        // Calcula horas diurnas e noturnas para cada período
-        list($horasDiurnas, $horasNoturnas) = calcularHoras($row["entrada"], $row["saida"]);
-
-        // Incrementa totalizadores
-        $totalHorasDiurnas += $horasDiurnas;
-        $totalHorasNoturnas += $horasNoturnas;
-    }
-
-    // Exibe os resultados
-    echo "Total de horas diurnas trabalhadas: " . $totalHorasDiurnas . " horas<br>";
-    echo "Total de horas noturnas trabalhadas: " . $totalHorasNoturnas . " horas";
-} else {
-    echo "Nenhum resultado encontrado";
-}
-
-// Fecha a conexão com o banco de dados
+$resultados = processarBatePonto($conexao);
 $conexao->close();
 ?>
 
+<div class="inicializador">
+<?php include 'menu.php'; ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $resultados; ?> 
         </div>
     </div>
 </div>

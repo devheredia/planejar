@@ -1,60 +1,93 @@
 <?php
+
 include_once('../config.php');
 session_start();
-
-function redirecionamento($localização) {
-    header("Location: $localização");
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
+// exit;
+function redirecionar($localizacao) {
+    header("Location: $localizacao");
     exit();
 }
 
-function inserirUnidade($conexao, $identificadorStringUnidade, $user_ID) {
-    $sql = "INSERT INTO 
-                    unidades 
-                            (
-                                unidade,
-                                insersor
-                            ) 
-                            VALUES 
-                                (
-                                    ?, 
-                                    ?
-                                )";
+function verificarUnidadeExistente($conexao, $identificadorStringUnidade) {
+    $sql = "SELECT COUNT(*) AS total FROM unidades WHERE unidade = ?";
     $stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($stmt, "si", $identificadorStringUnidade, $user_ID);
+    mysqli_stmt_bind_param($stmt, "s", $identificadorStringUnidade);
     mysqli_stmt_execute($stmt);
-    $row = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_bind_result($stmt, $total);
+    mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
-    return $row;
+    return $total;
+}
+
+function inserirUnidade($conexao, $identificadorStringUnidade, $userID) {
+    $sql = "INSERT INTO unidades (unidade, inseridor) VALUES (?, ?)";
+    $stmt = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($stmt, "si", $identificadorStringUnidade, $userID);
+    mysqli_stmt_execute($stmt);
+    $linhasAfetadas = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_close($stmt);
+    return $linhasAfetadas;
+}
+
+function atualizarUnidade($idunidade, $unidade, $status) {
+    global $conexao;
+
+    $sql = "UPDATE unidades SET unidade = ?, status = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "sii", $unidade, $status, $idunidade);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function processarAcaoUnidade($idUnidade, $unidade, $status) {
+    return atualizarUnidade($idUnidade, $unidade, $status);
 }
 
 if (isset($_SESSION['usuario']['id']) && isset($_POST['submitInserirUnidade'])) {
-    $user_ID = $_SESSION['usuario']['id'];
+    $userID = $_SESSION['usuario']['id'];
     $identificadorStringUnidade = $_POST['unidade'];
 
-    $sql = "SELECT 
-                COUNT(*) AS total 
-            FROM 
-                unidades 
-            WHERE unidade = ?";
-    $check_stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($check_stmt, "s", $identificadorStringUnidade);
-    mysqli_stmt_execute($check_stmt);
-    mysqli_stmt_bind_result($check_stmt, $total);
-    mysqli_stmt_fetch($check_stmt);
-    mysqli_stmt_close($check_stmt);
+    $totalUnidades = verificarUnidadeExistente($conexao, $identificadorStringUnidade);
 
-    if ($total > 0) {
-        redirecionamento("cadastro_unidades.php?error=error");
+    if ($totalUnidades > 0) {
+        redirecionar("cadastro_unidades.php?error=error");
     }
 
-    $row = inserirUnidade($conexao, $identificadorStringUnidade, $user_ID);
+    $linhasAfetadas = inserirUnidade($conexao, $identificadorStringUnidade, $userID);
 
-    if ($row > 0) {
-        redirecionamento("cadastro_unidades.php?sucesso=sucesso");
+    if ($linhasAfetadas > 0) {
+        redirecionar("cadastro_unidades.php?sucesso=sucesso");
     } else {
         echo "Erro ao inserir dados no banco de dados.";
     }
-} else {
-    redirecionamento("../login/login_view.php");
 }
-?>
+
+if (isset($_POST['submitDesativarUnidade'])) {
+    $idUnidade = $_POST['identificadorUnidade'];
+    $unidade = $_POST['unidade'];
+
+    if (processarAcaoUnidade($idUnidade, $unidade, 2)) {
+        redirecionar("cadastro_unidades.php?desativado=desativado");
+    } else {
+        echo "Erro ao atualizar unidade.";
+    }
+}
+
+if (isset($_POST['submitAtivarUnidade'])) {
+    $idUnidade = $_POST['identificadorUnidade'];
+    $unidade = $_POST['unidade'];
+
+    if (processarAcaounidade($idUnidade, $unidade, 1)) {
+        redirecionar("cadastro_unidades.php?atualizado=atualizado");
+    } else {
+        echo "Erro ao atualizar unidade.";
+    }
+}

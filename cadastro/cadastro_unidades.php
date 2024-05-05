@@ -9,7 +9,7 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
     $alert_class = "alert-danger ";
 } elseif (isset($_GET['atualizado']) && $_GET['atualizado'] === "atualizado") {
     $alert_message = "Unidade atualizada.";
-    $alert_class = "alert-danger ";
+    $alert_class = "alert-success ";
 } elseif (isset($_GET['desativado']) && $_GET['desativado'] === "desativado") {
     $alert_message = "Unidade desativada.";
     $alert_class = "alert-danger ";
@@ -94,5 +94,78 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
         </div>
         </form>
     </div>
-    
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="dataTable">
+                <table id="listar-unidade" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Unidade</th>
+                            <th>Inseridor</th>
+                            <th>Status</th>
+                            <th>Data de Aplicação</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var table = $('#listar-unidade').DataTable({
+            ajax: 'listar_unidades.php',
+            processing: true,
+            serverSide: true,
+            language: {
+                "sProcessing": "Processando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "Não foram encontrados resultados",
+                "sEmptyTable": "Nenhum registro disponível",
+                "sInfo": "Mostrando _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Pesquisar:",
+                "sUrl": "",
+                "sInfoThousands": ".",
+                "sLoadingRecords": "Carregando...",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sLast": "Último",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            },
+            createdRow: function(row, data, dataIndex) {
+                if (dataIndex % 2 === 0) {
+                    $(row).addClass('linha-azul');
+                } else {
+                    $(row).addClass('linha-verde');
+                }
+            }
+        });
+
+        $('#listar-unidade tbody').on('click', 'tr', function() {
+    var data = table.row(this).data();
+    $('input[name="identificadorUnidade"]').val(data[0]);
+    $('input[name="unidade"]').val(data[1]);
+
+    $('#botoesUpdate').css('display', 'flex');
+    $('#botoesEnvio').css('display', 'none');
+
+    // Remover o atributo disabled e adicionar o atributo readonly
+    $('#identificadorUnidade').prop('disabled', false).prop('readonly', true);
+});
+
+
+        $('.bin-button').click(function() {
+            $('#toast-menu-div').css('display', 'none');
+        });
+    });
+</script>

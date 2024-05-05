@@ -2,10 +2,6 @@
 
 include_once('../config.php');
 session_start();
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-// exit;
 function redirecionar($localizacao) {
     header("Location: $localizacao");
     exit();
@@ -91,3 +87,5 @@ if (isset($_POST['submitAtivarUnidade'])) {
         echo "Erro ao atualizar unidade.";
     }
 }
+mysqli_close($conexao);
+?>

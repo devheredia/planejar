@@ -27,6 +27,7 @@ $resultadoUnidade = selecioneUnidadesAtivas($conexao);
 list($alert_message, $alert_class) = exibirAlerta();
 $user_ID = obterUsuarioNome();
 $titulo = 'Bate-Ponto';
+mysqli_close($conexao);
 ?>
 
 <div class="inicializador">

@@ -63,4 +63,5 @@ if (isset($_POST['submitAtualizarBatePonto'])) {
         echo "Erro ao inserir dados no banco de dados.";
     }
 }
+mysqli_close($conexao);
 ?>

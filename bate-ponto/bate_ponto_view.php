@@ -158,7 +158,6 @@ mysqli_close($conexao);
         var timeInputs = $('input[placeholder="Entrada"], input[placeholder="Saída"]');
         timeInputs.on('click', function() {
             if ($(this).attr('type') !== 'datetime-local') {
-                // Change the type to "datetime-local"
                 $(this).attr('type', 'datetime-local');
                 $(this).focus();
             }

@@ -54,7 +54,7 @@
 <script>
     $(document).ready(function() {
         $('.botao-menu-atalho').click(function(event) {
-            event.stopPropagation(); // Evita que o evento de clique se propague para o window
+            event.stopPropagation();
             $('#menuOptions').toggleClass("show");
         });
 

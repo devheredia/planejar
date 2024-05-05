@@ -26,7 +26,7 @@ $query_usuarios = "SELECT
                         unidades c
                     LEFT JOIN
                         usuarios u ON u.id = c.insersor
-                        WHERE
+                    WHERE
                         CONCAT_WS(' ', c.unidade, c.insersor, u.usuario_nome) LIKE '%$termo%'
                         ORDER BY
                             c.unidade $direcao

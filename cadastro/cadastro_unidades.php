@@ -152,13 +152,13 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
         });
 
         $('#listar-unidade tbody').on('click', 'tr', function() {
-    var data = table.row(this).data();
-    $('input[name="identificadorUnidade"]').val(data[0]);
-    $('input[name="unidade"]').val(data[1]);
-    $('#botoesUpdate').css('display', 'flex');
-    $('#botoesEnvio').css('display', 'none');
-    $('#identificadorUnidade').prop('disabled', false).prop('readonly', true);
-});
+            var data = table.row(this).data();
+            $('input[name="identificadorUnidade"]').val(data[0]);
+            $('input[name="unidade"]').val(data[1]);
+            $('#botoesUpdate').css('display', 'flex');
+            $('#botoesEnvio').css('display', 'none');
+            $('#identificadorUnidade').prop('disabled', false).prop('readonly', true);
+        });
         $('.bin-button').click(function() {
             $('#toast-menu-div').css('display', 'none');
         });

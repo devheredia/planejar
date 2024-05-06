@@ -86,15 +86,25 @@ if (isset($_GET['sucesso']) && $_GET['sucesso'] === "sucesso") {
     </div>
 
     <script>
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             if (document.cookie.indexOf("cookies_accepted=true") === -1) {
-                document.getElementById("cookie-notice").style.display = "block";
+                var cookieNotice = document.getElementById("cookie-notice");
+                if (cookieNotice) {
+                    cookieNotice.style.display = "block";
+                }
             }
-        };
+        });
 
-        $(document).ready(function() {
-            $('.bin-button').click(function() {
-                $('#toast-menu-div').css('display', 'none');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var binButtons = document.querySelectorAll('.bin-button');
+            binButtons.forEach(function(binButton) {
+                binButton.addEventListener('click', function() {
+                    var toastMenuDiv = document.getElementById('toast-menu-div');
+                    if (toastMenuDiv) {
+                        toastMenuDiv.style.display = 'none';
+                    }
+                });
             });
         });
     </script>

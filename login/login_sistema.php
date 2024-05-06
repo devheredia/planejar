@@ -6,5 +6,5 @@ if (!isset($_SESSION['usuario']['usuario_nome'], $_SESSION['usuario']['senha']))
 }
 
 $logado = $_SESSION['usuario_nome'];
-header('Location: ../cadastro/home.php');
+header('Location: ../home/home.php');
 ?>

@@ -19,7 +19,7 @@ function verificarUnidadeExistente($conexao, $identificadorStringUnidade) {
 }
 
 function inserirUnidade($conexao, $identificadorStringUnidade, $userID) {
-    $sql = "INSERT INTO unidades (unidade, inseridor) VALUES (?, ?)";
+    $sql = "INSERT INTO unidades (unidade, insersor) VALUES (?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "si", $identificadorStringUnidade, $userID);
     mysqli_stmt_execute($stmt);

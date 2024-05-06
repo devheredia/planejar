@@ -1,4 +1,6 @@
-SELECT * FROM planejar.bateponto;CREATE TABLE `usuarios` (
+CREATE DATABASE `planejar` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
+
+CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_nome` varchar(45) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -8,6 +10,7 @@ SELECT * FROM planejar.bateponto;CREATE TABLE `usuarios` (
   `data_envio` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 CREATE TABLE `unidades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

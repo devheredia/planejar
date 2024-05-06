@@ -3,11 +3,26 @@ Versão do php: 8.2
 Administradores de banco de dados utilizado: MySql Workbench
 Servidor Web Apache: xampp
 
-Para iniciar o projeto, foi deixado na pasta SQL, alguns exemplos de como informo mudanças no banco, todavia como não fiz mudanças, não ficou específicado. Porém faço (alt) caso seja no ambinte de teste, o módulo e a data de modificação.
+Início do Projeto
+No diretório SQL, você encontrará exemplos de como registrar mudanças no banco de dados. Apesar de nenhum ajuste ter sido feito ainda, detalhes específicos não foram fornecidos. Contudo, realizo (alt) sempre que necessário, especialmente no ambiente de teste, indicando o módulo e a data da modificação.
 
-Na página todos_os_bancos.sql é onde você encontrará perfeitamente para iniciar o projeto do 0.
+Para iniciar o projeto a partir do zero, consulte o arquivo todos_os_bancos.sql.
 
-Após isso, quando iniciar o projeto, você irá para a tela de login que foi adcionada para fins de demonstração e facilitação de algumas funções bases do teste.
+Tela de Login
+Após o início do projeto, você será redirecionado para a tela de login. Essa adição foi feita para demonstrar e simplificar algumas funções básicas do teste.
 
-Crie uma conta, como é apenas um teste, não existe uma configuração muito complexa para acessar o projeto e suas dependências.
+Configuração da Conta
+Como se trata apenas de um teste, a configuração necessária para acessar o projeto e suas dependências é bastante simples. Basta criar uma conta.
+
+Menu Lateral
+Um menu lateral genérico, criado em 2022, está disponível para demonstração. Todos os itens na categoria principal estão funcionais.
+
+Funcionalidades Principais
+Para fazer o projeto funcionar corretamente, siga os passos abaixo:
+
+Cadastro de Unidade: Vá para a seção "Unidade" e cadastre uma nova unidade. É possível editar ou atualizar uma unidade clicando na linha correspondente na tabela abaixo. Lembre-se de que não é possível excluir uma unidade, pois isso afetaria os dados associados a ela. No entanto, é possível desativá-la a qualquer momento.
+Registro de Bate-Ponto: Após cadastrar a unidade, vá para a seção "Bate-Ponto" e registre o bate-ponto. Este passo é essencial para definir a origem do trabalhador. Para excluir ou atualizar um registro de bate-ponto, clique na tabela e selecione a linha desejada.
+Registro de Horas Trabalhadas: Por fim, vá para a seção "Registro" para conferir as horas trabalhadas.
+
+
 

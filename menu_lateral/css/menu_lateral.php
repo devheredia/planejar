@@ -190,7 +190,6 @@
     }
 
     .content {
-        background: url(/image/img-2.jpg) no-repeat;
         background-size: cover;
         background-position: center;
         height: 100px;

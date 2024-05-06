@@ -1,5 +1,5 @@
-<?php 
-    include 'includes.php'; 
+<?php
+include 'includes.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -62,6 +62,7 @@
             </div>
         </form>
     </div>
+    <script src="js/login_registro.js"></script>
 </body>
 
 </html>

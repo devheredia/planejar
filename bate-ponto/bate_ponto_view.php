@@ -162,13 +162,12 @@ mysqli_close($conexao);
                 $(this).focus();
             }
         });
-    });
 
-    $(document).ready(function() {
         var table = $('#listar-batePontos').DataTable({
             ajax: 'listar_batePontos.php',
             processing: true,
             serverSide: true,
+            deferRender: true,
             language: {
                 "sProcessing": "Processando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -194,11 +193,7 @@ mysqli_close($conexao);
                 }
             },
             createdRow: function(row, data, dataIndex) {
-                if (dataIndex % 2 === 0) {
-                    $(row).addClass('linha-azul');
-                } else {
-                    $(row).addClass('linha-verde');
-                }
+                $(row).addClass(dataIndex % 2 === 0 ? 'linha-azul' : 'linha-verde');
             },
             order: [
                 [6, 'desc']
@@ -207,30 +202,16 @@ mysqli_close($conexao);
 
         $('#listar-batePontos tbody').on('click', 'tr', function() {
             var data = table.row(this).data();
-            var identificador = data[0];
-            var nome = data[1];
-            var unidade = data[2];
-            var entrada = data[3];
-            var saida = data[4];
-
-            $('input#identificador').val(identificador).removeAttr('disabled').prop('readonly', true);
-            $('input#nome').val(nome);
-
-            $('select[name="id_unidade"] option').each(function() {
-                if ($(this).text() === unidade) {
-                    $(this).prop('selected', true);
-                }
-            });
-
-            $('input[name="entrada"]').val(entrada);
-            $('input[name="saida"]').val(saida);
-
+            $('input#identificador').val(data[0]).removeAttr('disabled').prop('readonly', true);
+            $('input#nome').val(data[1]);
+            $('select[name="id_unidade"] option').filter(function() {
+                return $(this).text() === data[2];
+            }).prop('selected', true);
+            $('input[name="entrada"]').val(data[3]);
+            $('input[name="saida"]').val(data[4]);
             $('#botoesUpdate').css('display', 'flex');
             $('#botoesEnvio').css('display', 'none');
         });
-
-
-
 
         $('.bin-button').click(function() {
             $('#toast-menu-div').css('display', 'none');
